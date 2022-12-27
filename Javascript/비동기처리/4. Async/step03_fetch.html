@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+  <script>
+    //I. fetch API : 비동기 통신을 위한 API. xhr보다 간결하고 편리하다.
+    //fetch() : 비동기 통신을 위한 함수. Promise 객체를 반환한다. GET 방식으로 요청한다.
+
+    //response 객체 : fetch() 함수가 반환하는 객체. 응답에 대한 정보를 가지고 있다.
+      //response 객체의 메서드 : json(), text(), blob(), arrayBuffer(), formData()
+
+    //1. GET 방식으로 요청하기
+      // https://jsonplaceholder.typicode.com/posts
+    fetch('https://jsonplaceholder.typicode.com/posts')
+      .then(response => response.json()) //응답을 json 형태로 변환
+      .then(json => console.log(json[1]))  
+
+      //* 1번 게시글만 요청하고 싶다면 뒤에 ?id=1 혹은 /1 을 붙여주면 된다.(Restful API)
+        // https://jsonplaceholder.typicode.com/posts/1
+        // https://jsonplaceholder.typicode.com/posts?id=1
+    fetch('https://jsonplaceholder.typicode.com/posts/1')
+      .then(response => response.json()) //응답을 json 형태로 변환
+      .then(json => json.userId) //userId만 출력하여 새로운 요청을 보내기
+      .then(userId => fetch(`https://jsonplaceholder.typicode.com/users/${userId}`)) //users기준으로 재요청을 보냄
+      .then(response => response.json())
+
+    //2. POST 요청 : Client가 서버에 특정 데이터 생성
+      //fetch(url, option) : url은 요청할 서버의 주소, option은 요청에 대한 설정을 담은 객체이다.
+
+      // https://jsonplaceholder.typicode.com/posts
+    fetch('https://jsonplaceholder.typicode.com/posts', {
+      method: 'POST',
+      body: JSON.stringify({ //body에는 요청에 담을 데이터를 담는다. 서버가 받을 수 있도록 JSON 형태로 변환하여 넘겨준다.
+        title: 'foo',
+        body: 'bar', 
+        userId: 1
+      }),
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8'
+      }
+    })
+      .then(response => response.json())
+      .then(json => console.log(json))
+
+    //3. PUT 요청 : Client가 서버에 특정 데이터 수정
+      // https://jsonplaceholder.typicode.com/posts/
+      //id가 52번인 데이터를 수정
+    fetch('https://jsonplaceholder.typicode.com/posts/52', {
+      method: 'PUT',
+      body: JSON.stringify({ //수정할 데이터를 body에 담는다.
+        id: 52,
+        title: 'put test',
+        body: 'foo', 
+        userId: 1
+      }),
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8'
+      }
+    })
+      .then(response => response.json())
+      .then(json => console.log(json))
+
+    //4. DELETE 요청 : Client가 서버에 특정 데이터 삭제
+      //id가 1번인 데이터를 삭제
+    fetch('https://jsonplaceholder.typicode.com/posts/1', {
+      method: 'DELETE' //method만 DELETE로 설정하면 된다.
+    })
+      .then(response => response.json())
+      .then(json => console.log(json))
+
+  //II.axios : 비동기 통신을 위한 Promise 기반 라이브러리. fetch API보다 더 많은 기능을 제공한다.
+    //axios.get(url, option) : GET 방식으로 요청
+    //axios.post(url, data, option) : POST 방식으로 요청
+    //axios.put(url, data, option) : PUT 방식으로 요청
+    //axios.delete(url, option) : DELETE 방식으로 요청
+    //axios.all([promise1, promise2, ...]) : 여러 개의 Promise 객체를 한 번에 처리할 수 있다.
+    //axios.spread(callback) : axios.all() 메서드로 여러 개의 Promise 객체를 한 번에 처리할 때, 각각의 결과를 callback 함수의 인자로 전달한다.
+
+    //특징
+      //axios는 JSON을 객체로 자동 변환한다. -> JSON.parse()를 사용하지 않아도 된다.
+      //axios는 data 속성에 요청 데이터를 담는다. -> fetch API의 body 속성과 같은 역할을 한다.
+
+    //1.. GET 방식으로 요청하기
+      // https://jsonplaceholder.typicode.com/posts
+    axios.get('https://jsonplaceholder.typicode.com/posts')
+      .then(response => console.log(response.data[1])) 
+
+    //2.. POST 요청 : Client가 서버에 특정 데이터 생성
+      // https://jsonplaceholder.typicode.com/posts
+    axios.post('https://jsonplaceholder.typicode.com/posts', {
+      title: 'foo',
+      body: 'bar', 
+      userId: 1
+    })
+      .then(response => console.log(response.data))
+
+
+  //III.Destructured Assignment(비구조화 할당) : 객체나 배열의 속성을 해체하여 그 값을 개별 변수에 담을 수 있는 JavaScript 표현식이다.
+    //객체 비구조화 할당 
+    axios.get('https://jsonplaceholder.typicode.com/users') //users 항목의 geo 속성을 비구조화 할당
+      .then(response => {
+        const { lat, lng } = response.data[0].address.geo
+        console.log(lat, lng) //lat : 37.3159, lng : 81.1496
+      })
+
+      //주의점 : 같은 차원의 속성들만 비구조화 할당이 가능하다.
+    //Array 비구조화 할당
+    const arr = [1, 2, 3, 4, 5];
+    const [a, b, c, d, e] = arr;
+    console.log(a, b, c, d, e); // 1 2 3 4 5
+
+    const objArr = {
+            info: {
+                private: {
+                    name: 'js',
+                    age: 24,
+                    hobbies: ['programming, algorithm']
+                }
+            },
+            purpose: 'destructure test'
+        }
+    
+    let {name, age, hobbies} = objArr.info.private;
+    console.log(name, age, hobbies); // js 24 [ 'programming, algorithm' ]
+    
+  //IV. 배열 복사(...)
+  avengers = ['ironman', 'captain', 'thor', 'hulk', 'black widow', 'hawkeye'];
+  xmen = ['wolverine', 'cyclops', 'storm', 'beast', 'magneto', 'phoenix'];
+  all_heroes = [...avengers, ...xmen]; //각 배열들이 풀어져서 복사된다.
+    
+  //마찬가지로 객체도 복사가 가능하다.
+  const avenger = {
+    job : 'avenger'
+  }
+  const ironman = {
+    name : 'ironman',
+    actor : 'robert downey jr',
+    alias : 'tony stark',
+    ...avenger //avenger 객체가 풀어져서 복사된다. -> job : 'avenger'
+  }
+  console.log(ironman.job); // { name: 'ironman', actor: 'robert downey jr', alias: 'tony stark', job: 'avenger' }
+
+  //활용
+  function sum(...arr) { //매개변수로 숫자들을 받고, 이들을 arr라는 배열로 묶어서 사용. 
+    return arr.reduce((acc, cur) => acc + cur, 0); 
+  }
+  console.log(sum(1, 2, 3, 4, 5)); // 15
+
+  
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // Web Storage : localStorage, sessionStorage
+      // localStorage : 브라우저를 닫아도 데이터가 남아있음
+      // sessionStorage : 브라우저를 닫으면 데이터가 사라짐
+      // 둘다 key, value 형태로 데이터를 저장함.
+
+    //methods : setItem, getItem, removeItem, clear, key
+    // properties : length (저장된 데이터의 개수)
+
+    localStorage.setItem('name', 'kim');
+    localStorage.setItem('age', 20);
+    localStorage.setItem('address', 'seoul');
+
+    alert(localStorage.getItem('name')); 
+    localStorage.removeItem('name');
+
+    // key값을 모를 경우 전체 데이터를 확인
+    for(let i=0; i<localStorage.length; i++){
+      let key = localStorage.key(i);
+      let value = localStorage.getItem(key);
+      window.console.log(key, value);
+    }
+    
+
+    
+
+
+
+  </script>
+</body>
+</html>

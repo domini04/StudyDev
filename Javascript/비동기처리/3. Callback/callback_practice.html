@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+            // ex2        
+        // function fetchData(studentId){
+        //     const student = {
+        //         id: studentId
+        //     }
+        //     return student;
+        // }
+
+        // console.log(fetchData(1));
+        
+        // 위의 코드에 콜백 함수를 적용하면???
+        // function fetchData(studentId, callback){
+        //     const student = {
+        //         id: studentId
+        //     }
+        //     callback(student);
+        // }
+
+        // fetchData(1, function(student) {
+        //     console.log(student);
+        // });
+
+        // {id: 1}
+
+        // 비동기를 통해 결과 출력
+function fetchData(studentId){
+    let student;
+    setTimeout(function() {
+        student = {
+            id: studentId
+        }
+    }, 0);
+    return student;
+}
+console.log(fetchData(1));
+
+// {id: 1}
+
+        /*
+            학생 객체가 만들어 지는 로직이 비동기로 처리 되고 있음.
+            그런데, 객체가 만들어 지는 동안 return student 실행됨.
+            따라서, 생성되지 않은 student객체가 출력 되었기 때문에
+            undefined가 결과로 나옴!
+
+            이를 해결하기위해서는? 어떻게 해야할까? --> callback
+        */
+       // return student; 대신에 callback(student);를 사용하면 됨.
+function fetchData(studentId, callback){
+      let student;
+      setTimeout(function() {
+          student = {
+              id: studentId
+          }
+          callback(student);  //해당 callback이 실행되는 시점 : setTimeout이 실행되는 시점
+      }, 0);
+  } 
+
+fetchData(1, (student) => {
+    console.log(student);
+}); // {id: 1}
+
+  </script>
+</body>
+</html>

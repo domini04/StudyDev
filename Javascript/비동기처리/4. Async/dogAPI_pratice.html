@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+-- https://dog.ceo/
+  <!-- dog-api 실습 -->
+  <button id="fetch-dog-api">fetch</button>
+  <hr />
+  <div id="show-dog-img"></div>
+
+  <script>
+    const fetchBtn = document.querySelector('#fetch-dog-api');
+    const showImg = document.querySelector('#show-dog-img');
+    fetchBtn.addEventListener("click", () => {
+      fetch('https://dog.ceo/api/breeds/image/random')
+        .then(response => response.json())
+        // .then(data =>   console.log(data)); //image url이 data.message에 들어있음.
+         //넘어온 url을 이용해서 img를 showImg에 추가함
+        .then(data => {
+          const img = document.createElement('img'); //img 태그를 생성함.
+          img.src = data.message; //img 태그의 src 속성에 url을 넣음.
+          //먼저 showImg에 다른 이미지가 있으면 삭제함.
+          if(showImg.hasChildNodes()){
+            showImg.removeChild(showImg.firstChild);
+          }
+          showImg.appendChild(img); //showImg에 img 태그를 추가함.
+        })  
+    });
+
+    //
+  </script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #section {
+      margin: 20px;
+      padding: 20px;
+      border: 3px solid;
+    }
+
+    #link {
+      display: inline-block;
+      padding: 20px;
+      border: 3px dashed gold;
+    }
+  </style>
+</head>
+<body>
+  <ul id="menu">
+    <li id="li-1">1</li>
+    <li id="li-2">2</li>
+    <li id="li-3">3</li>
+    <li id="li-4">4</li>
+    <li id="li-5">5</li>
+  </ul>
+
+  <ul id="menu">
+    <li id="li-1">1</li>
+    <li id="li-2">2</li>
+    <li id="li-3">3</li>
+    <li id="li-4">4</li>
+    <li id="li-5">5</li>
+  </ul>
+
+  <hr>
+  <div id="section">
+    <a href="https://naver.com" id="link">link</a>
+  </div>
+
+  <script>
+    //id가 li-3인 태그를 클릭시 해당 텍스트를 출력
+
+    //version 1
+    const id3 = document.getElementById('li-3');
+    id3.addEventListener('click', function(){
+      console.log('3번째 li 태그를 클릭했습니다.');
+      console.log(id3.innerHTML);
+    });
+
+    //version 2 - 이벤트 
+    // menu.addEventListener('click', (e) => {   //e는 이벤트 객체. 모든 이벤트들을 Listen하면서 Click이벤트가 발생하면 이벤트 객체를 전달해준다.
+    //   console.log(e);
+    //   console.log(e.target); //e.target은 이벤트가 발생한 태그를 가리킨다.
+    //   console.log(e.target.innerHTML);
+    // });
+
+    //arrow function 특징
+    //1. this가 없다. this는 함수가 호출되는 방식에 따라 결정된다. arrow function은 함수가 호출되는 방식과 상관없이 자신이 선언된 함수의 this를 가리킨다.
+      // this가 없기 때문에 멤버변수 생성이 불가능하다.
+    //2. arguments가 없다. arguments는 함수가 호출되는 방식에 따라 결정된다. arrow function은 함수가 호출되는 방식과 상관없이 자신이 선언된 함수의 arguments를 가리킨다.
+    //3. new 연산자로 생성자 함수를 호출할 수 없다. new 연산자로 생성자 함수를 호출하면 this가 생성되는 객체를 가리키게 되는데, arrow function은 this가 없기 때문에 new 연산자로 생성자 함수를 호출할 수 없다.
+
+    //이벤트 버블링 : 이벤트가 발생한 태그에서 부모 태그로 이벤트가 전파되는 것
+    //section이 link를 포함하고 있는 형태
+    const section = document.getElementById('section');
+    const link = document.getElementById('link');
+    section.addEventListener('click', (e) => {
+      console.log(e.target);
+      e.currentTarget.style.backgroundColor = 'blue';
+    });
+
+    link.addEventListener('click', (e
+    ) => {
+      console.log(e.target);
+      e.currentTarget.style.backgroundColor = 'red';
+      e.preventDefault(); //preventDefault() : 이벤트의 기본 동작을 막는다. ex) a태그의 href 속성을 막는다.
+        //* preventDefault()를 form태그의 submit 이벤트에 사용하면 form태그의 submit이벤트가 발생하지 않는다.
+    }); //부모 태그의 이벤트가 먼저 발생하고 자식 태그의 이벤트가 발생한다.
+
+    //이벤트 버블링을 막는 방법 : e.stopPropagation()을 사용. 반드시 자식 태그의 이벤트에 사용해야 한다.
+      //stopPropagation() : 이벤트가 발생한 태그에서 부모 태그로 이벤트가 전파되는 것을 막는다.
+    link.addEventListener('click', (e) => {
+      e.stopPropagation();
+    });
+    
+
+  </script>
+</body>
+</html>

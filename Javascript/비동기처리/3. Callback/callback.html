@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    //Callback : 함수의 인자로 함수를 전달하는 방식
+      //Callback function : 다른 함수의 parameter로 전달되는 함수
+      //Callback function을 사용하는 이유 : 비동기 처리를 위해    
+    // 사용
+    function add(a, b, callback){
+      var result = a + b;
+      callback(result);
+    }
+
+    //Synchronous vs. Asynchronous
+      //Syncronous(동기 처리) : 어떤 작업을 요청했을 때, 그 요청에 대한 응답이 올 때까지 기다리는 것
+      [1,2,3].forEach(num => console.log(num)); //동기 처리 -> 1,2,3을 순차적으로 출력
+
+      //Asynchronous(비동기 처리) : 어떤 작업을 요청했을 때, 그 요청에 대한 응답이 올 때까지 기다리지 않고 다른 작업을 수행하는 것
+      [1,2,3].forEach(num => setTimeout(() => console.log(num), 4000)); //비동기 처리 -> 해당 script를 바로 처리하지 않고 4초 뒤에 처리.
+        //뒤에 script가 있을 경우, 뒤에 script를 먼저 처리하고 4초 뒤에 1,2,3을 출력
+      console.log("나중에 존재하는 코드지만 비동기 처리로 인해 먼저 처리됨")
+        //추가 예제
+        setTimeout(() => console.log("4초 후에 실행됨"), 4000);
+        setTimeout(() => console.log("1초 뒤에 실행됨"), 1000);
+        setTimeout(() => console.log("2초 뒤에 실행됨"), 2000);
+          //출력 : 1초 뒤에 실행됨, 2초 뒤에 실행됨, 4초 후에 실행됨
+
+      
+      //비동기 처리의 활용 : 화면에 데이터를 먼저 load하고 나중에 데이터를 받아서 화면에 출력하는 경우
+
+      //비동기 실행을 동기화하기 위해 callback 함수를 사용
+      function func() {
+        setTimeout(() => {
+          console.log("비동기 처리");
+          setTimeout(() => {
+            console.log("비동기 처리 동기화");
+            setTimeout(() => {
+              console.log("비동기 처리 동기화");
+            }, 1000);
+          }
+        , 1000);
+      })
+    }
+  
+
+//Promise : 비동기 처리를 동기화하기 위해 사용하는 객체
+    //1. 상태 : pending(대기), fulfilled(이행), rejected(실패)
+
+    //생산자 : Promise 객체를 생성하는 함수
+    //resolve & reject : 성공적으로 처리되었을 때 호출되는 함수/실패했을 때 호출되는 함수 -> fulfilled, rejected 상태로 변경
+const promise = new Promise((resolve, reject) => {
+  //pending
+  setTimeout(() => {
+    resolve("성공"); //fulfilled //
+    console.log(promise)
+  }, 3000);
+});
+console.log(promise); //Promise { <pending> }
+    // 소비자 : Promise 객체를 사용하는 함수
+    //then : Promise 객체의 상태가 fulfilled일 때 호출되는 함수
+    //catch : Promise 객체의 상태가 rejected일 때 호출되는 함수
+
+promise
+  .then((result) => { //promise가 fulfilled 상태가 되면 then 함수가 호출됨
+  console.log(result); //성공
+}).catch((error) => { //promise가 rejected 상태가 되면 catch 함수가 호출됨
+  console.log(error);
+}).finally(() => { //promise가 fulfilled, rejected 상태가 되면 finally 함수가 호출됨
+  console.log("무조건 실행");
+});
+
+      
+      
+
+  </script>
+  
+</body>
+</html>

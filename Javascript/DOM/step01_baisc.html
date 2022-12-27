@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1 class="font30" id="title1">제목1</h1>
+  <h1 id="title2">제목2</h1>
+  <h1 id="title3">제목3</h1>
+
+  <div id="aTag">
+    <p>내용1</p>
+    <p>내용2</p>
+    <p>내용3</p>
+  </div>
+
+  <!-- 노드 생성 -->
+  <div id="dom">
+    <h1>Plus-Minus</h1>
+    <div id="result"></div>
+    <button id="btn-plus" class="btn">+</button><button id="btn-minus" class="btn">-</button>
+  </div>
+
+  <br/>
+
+  <button id="check" class="tab" name="checkName">조회</button>
+  <button id="transfer" class="tab">이체</button>
+  <ul class="checkService hide">
+      <li>계좌조회</li>
+      <li>수표조회</li>
+      <li>오픈뱅킹</li>
+  </ul>
+
+  <div id="content"></div>
+  <div id="content2"></div>
+
+  <script>
+    //DOM : Document Object Model
+      //HTML 문서를 객체로 표현한 것
+
+    //DOM 객체들 
+      //document : HTML 문서 전체를 객체로 표현한 것
+      //window : 브라우저 창을 객체로 표현한 것
+      //element : HTML 문서의 태그를 객체로 표현한 것
+
+    //문서의 elements를 관리하는 것은 javascript를 통해서 하는 것이 권장됨. 
+      // -> javascript를 통해서 elements를 관리하면, 동적으로 elements를 관리할 수 있음.
+
+    //document
+      //문서 내 요소 검색
+
+      //document.getElementById(id) : id 속성값으로 요소 검색
+      const title1 = document.getElementById('title1'); //id로 찾기
+      title1.style.color = 'red'; //style 속성으로 색상 변경
+
+      //document.getElementsByTagName(tag) : 태그 이름으로 요소 검색
+      const titles = document.getElementsByTagName('h1')
+      console.log(titles);
+      titles[2].style.color = 'tomato';
+
+      //document.querySelector(css) : css 선택자로 요소 검색
+      const title2 = document.querySelector('#title2'); //# : id를 의미하는 css selector
+      title2.style.color = 'blue';
+      
+      //document.getElementsByClassName(class) : class 속성값으로 요소 검색
+      const font = document.getElementsByClassName('font30');
+      font[0].style.fontSize = '30px';
+      font[0].style.textAlign = 'center';
+
+      //요소 생성
+      const title4 = document.createElement('h1'); //h1 태그 생성
+      title4.innerText = '제목4'; //innerText 속성으로 내용 변경
+      title4.style.color = 'green';
+      document.body.appendChild(title4); //appendChild() : 요소를 부모 요소의 자식 요소로 추가
+
+      //요소 삭제
+      // const aTag = document.getElementById('aTag');
+      // aTag.remove(); //remove() : 요소 삭제
+
+      //요소 복사
+      const title5 = title4.cloneNode(true); //cloneNode() : 요소 복사
+      title5.innerText = '제목5';
+      title5.style.color = 'orange';
+      document.body.appendChild(title5);
+
+      //요소 replace
+      const title6 = document.createElement('h1');
+      title6.innerText = '제목6';
+      title6.style.color = 'purple';
+      document.body.replaceChild(title6, title5); //replaceChild() : 요소 교체
+
+        //aTag 요소의 자식 요소로 a 태그 추가
+      const aTag = document.getElementById('aTag');
+      const a = document.createElement('a');
+      a.innerText = 'a태그';
+      a.href = 'https://www.naver.com';
+      aTag.appendChild(a);
+      //혹은 aTag.innerHTML = '<a href="https://www.naver.com">a태그</a>'; 방식으로 바로 추가 가능
+
+
+      //기타 메서드들
+        //속성(attribute) 추가
+      title2.setAttribute('class', 'font30'); //setAttribute() : 속성 추가
+
+        //텍스트 : innerText, textContent
+        //*주의 : innerText, textContent는 보안상의 이유로 script 태그를 제외한 모든 태그의 텍스트를 가져옴. 
+          // 이 때 심어둔 바이러스가 실행될 수 있음. 따라서 innerHTML을 사용하는 것이 좋음.
+        
+      //Node : DOM표준에 나와있는 HTML의 모든 요소
+        //Node에는 관계가 존재
+          //부모노드 : 자식노드를 가지고 있는 노드
+          //자식노드 : 부모노드에 의해 가지고 있는 노드
+          //형제노드 : 같은 부모노드를 가지고 있는 노드
+          //자손노드 : 자식노드의 자식노드를 가지고 있는 노드
+          //조상노드 : 부모노드의 부모노드를 가지고 있는 노드
+
+          console.log(document.childNodes); //childNodes : 자식노드들을 배열로 반환
+          console.log(document.firstChild.childNodes); //firstChild : 첫번째 자식노드 반환
+          
+        //※주의점 Node로 접근 vs. Document로 접근에 따라 사용 가능한 메서드가 다름
+          //Node로 접근 : childNodes, firstChild, lastChild, parentNode, nextSibling, previousSibling
+          //Document로 접근 : getElementById, getElementsByTagName, getElementsByClassName, querySelector, querySelectorAll
+          // console.log(document.firstChild.style.display) //undefined : Node객체는 style 속성을 가지고 있지 않음
+      
+      //Event 관련
+              // Plus-Minus
+        const btnPlus = document.getElementById('btn-plus');
+        const btnMinus = document.getElementById('btn-minus');
+
+        btnPlus.addEventListener('click', function() {
+            result.innerHTML = parseInt(result.innerHTML) + 1;
+        });
+        btnMinus.addEventListener('click', function() {
+            result.innerHTML = parseInt(result.innerHTML) - 1;
+        });
+  </script>
+</body>
+</html>

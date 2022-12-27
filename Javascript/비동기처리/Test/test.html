@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+  <script>
+
+
+  //get으로 실행
+
+data = {"command" : "GetCatInfo", "catId" : 1}
+  axios.get('http://localhost:8080/cat/cat'
+  , {
+    params : data
+  }
+)
+  .then(function (response) {
+    console.log(response);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+
+
+  // const url = 'http://localhost:8080/cat/cat'
+// const data = {
+//             'email' : "email",
+//             'pw' : "pw"
+//         };
+// const config = {"Content-Type": 'application/json'};
+
+
+  //post로 실행
+  // axios.post(url, data, config) //data는 json형식으로 보내야함
+  // .then(function (response) {
+  //   console.log(response);
+  // })
+  // .catch(function (error) {
+  //   console.log(error);
+  // });
+
+
+  </script>
+</body>
+</html>
+
+
+<!-- axios.post('http://localhost:8080/cat/cat')
+.then(function (response) {
+  console.log(response);
+})
+.catch(function (error) {
+  console.log(error);
+}); -->
+
+
+<!-- axios.post('http://localhost:8080/catproject/cat', data, config)
+.then(function (response) {
+  console.log(response);
+})
+.catch(function (error) {
+  console.log(error);
+}); -->
+
+<!-- // (async () => {
+  //   try { 
+  //     const res = await axios.get('http://localhost:8080/catproject/cat', {
+  //       params: {
+  //         command: 'getCatInfo',
+  //         catId: 1
+  //       }
+  //     })
+  //     .then ( response => {
+  //       console.log(response);
+  //     })
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // })();
+
+    data = {
+    command : "getCatInfo",
+    catId : 1
+  }
+  const config = {
+    URL : 'http://localhost:8080/catproject/cat',
+    method : 'post',
+    data : data,
+    headers: {
+      'Content-Type': 'text/html'
+    }
+  }
+    //보내는 request객체를 intecept하여 출력 후 post로 다시 서버에 보내기
+    axios.interceptors.request.use(function (config) {
+      console.log(config);
+      return config;
+    }, function (error) {
+      return Promise.reject(error);
+    });
+
+    axios(config)
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+  data = {
+    command : "getCatInfo",
+    catId : 1
+  }
+
+  const config = {
+    URL : 'http://localhost:8080/cat/cat',
+    method : 'post',
+    data : data,
+    headers: {
+      'Content-Type': 'application/json'
+    },
+
+    proxy: {
+    host: 'localhost',
+    port: 8080
+  }
+  }
+
+  axios.post(config)
+  .then(function (response) {
+    console.log(response);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+
+    const config = {
+    URL : 'http://localhost:8080/catproject/cat',
+    method : 'post',
+    data : data,
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }
+
+  axios.post(config)
+  .then(function (response) {
+    console.log(response);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });

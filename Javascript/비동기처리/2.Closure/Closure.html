@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+      //Outer Context의 변수 참조
+      let l0 = 0;
+    
+    (function  f0(){
+        l1 = 1;
+        console.log(l0, l1); //0,1 모두 출력된다. 
+      }
+    )();
+
+    //Closure : 함수가 실행되는 순간에 함수가 실행되는 환경을 기억하고 있다가, 함수가 실행되는 환경이 사라지더라도 함수가 기억하고 있는 환경을 계속 유지하고 있다.
+      //※ 함수가 실행되는 Context가 아닌, 생성되는 Context를 기억한다!!
+    
+    //1. 내부 실행되는 함수가 함수 밖에서 변경된 경우(Closure 미사용)
+    const f0 = () => {
+      let f0 = 0;
+      console.log(f0, f1);
+    }
+
+    const f1 = () => {
+      let f1 = 1;
+      f0();
+    } //에러 발생 : f0()에서 f1을 참조할 수 없다 : f0이 실행(define)되는 순간에 f1이 없었기 때문에, f0이 실행되는 순간에 f1을 참조할 수 없다.
+
+    //2. Closure 사용
+    const f2 = () => {
+      let f2 = 2;
+      (function f3(){
+        let f3 = 3;
+        console.log(f2, f3); //0,1 출력된다 : f2는 f3가 실행되는 순간에 존재했기 때문에, f3가 실행되는 순간에 f2를 참조할 수 있다.
+      })();
+    }
+    f2();
+
+
+  </script>
+</body>
+</html>

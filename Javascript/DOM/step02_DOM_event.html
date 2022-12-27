@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+  /* checkService 클래스 & hide id를 갖고 있는 것을 숨기기 */
+  .checkService, #hide {
+    display: none;
+  }
+  </style>
+</head>
+<body>
+  <!-- onclick시 checkClick()실행 -->
+  <button id="check" class="tab" name="checkName" onclick="checkClick()">조회</button>
+  <button id="transfer" class="tab">이체</button>
+  <ul class="checkService" id="hide">
+      <li>계좌조회</li>
+      <li>수표조회</li>
+      <li>오픈뱅킹</li>
+  </ul>
+
+  <div id="content"></div>
+  <div id="content2"></div>
+
+  <script>
+    const check = document.getElementById('check');
+    const transfer = document.getElementById('transfer');
+    const checkService = document.querySelector('.checkService');
+    const content = document.getElementById('content');
+
+     //동작 : check 클릭시 -> div#content에 '조회' 출력  
+    //인라인 방식 : HTML 태그에 직접 이벤트를 등록하는 방식
+        //1.우선 함수를 생성
+        function checkClick(){
+          content.innerHTML = '조회';
+        }
+        //2.HTML 태그에 이벤트를 등록
+
+    //Property 방식 : Javascript 객체의 속성으로 이벤트를 등록하는 방식
+      check.onclick = function() {
+        content.innerHTML = '조회 서비스 시작';
+      }
+        //property 방식 단점 : 이벤트를 등록할 때마다 이전에 등록된 이벤트는 덮어씌워짐 -> 같은 이벤트는 중복 불가
+        // check.onclick = function() {
+        //   content.innerHTML = '조회 서비스 시작2';
+        // }
+        // check.onclick = function() {
+        //   content2.innerHTML = '조회 서비스 시작3';
+        // }
+
+    //addEventListener 방식 : Javascript 객체의 메소드로 이벤트를 등록하는 방식. 가장 많이 사용
+      //1.우선 함수를 생성
+      function transferClick(){
+        content.innerHTML = '이체';
+      }
+      //2.이벤트를 등록
+      transfer.addEventListener('click', transferClick);
+      //addEventListener 방식 단점 : 이벤트를 등록할 때마다 이전에 등록된 이벤트는 유지 -> 같은 이벤트는 중복 가능
+      transfer.addEventListener('click', function(){
+        content.innerHTML = '이체 서비스 시작';
+      });
+      transfer.addEventListener('click', function(){
+        content2.innerHTML = '이체 서비스 시작2';
+      });
+
+    //이벤트 종류 : https://developer.mozilla.org/ko/docs/Web/Events
+      //1.마우스 이벤트
+        //click, dblclick, mouseover, mouseout, mousemove, mousedown, mouseup, mouseenter, mouseleave ...
+      //2.키보드 이벤트
+        //keydown, keypress, keyup ...
+    //이벤트 핸들러 : https://developer.mozilla.org/ko/docs/Web/API/EventTarget/addEventListener
+    
+    //checkService를 mouseover시 보이게 하기
+       //mouseover시 checService의 hide 클래스를 제거
+      checkService.addEventListener('mouseover', function(){
+        console.log(checkService.classList);
+        checkService.classList.remove('hide');
+      });
+
+  </script>
+</body>
+</html>

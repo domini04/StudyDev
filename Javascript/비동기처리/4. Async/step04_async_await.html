@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+  // async & await : 비동기를 간편하게 처리할 수 있도록 해주는 문법. ES8에 추가됨.
+    //I. async : promise를 더 쉽게 사용할 수 있도록 도와주는 문법. async가 붙은 함수는 항상 promise를 반환함.
+    async function fetchUser() {
+      // do network request in 10 secs...
+      return 'ellie';
+    }
+    console.log(fetchUser()); // Promise { 'ellie' }
+    
+    fetchUser().then(data => console.log); // Promise객체가 반환되기 때문에 함수에 then을 붙여서 사용할 수 있음.
+
+    //II. await : async가 붙은 함수 안에서만 사용할 수 있음. promise가 끝날 때까지 기다렸다가 다음 코드를 실행함.
+    function delay(ms) { // ms만큼 기다리는 함수
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    async function getApple() {
+      await delay(1000); //해당 함수가 끝날 때까지 기다림. 
+      return '🍎';
+    }
+      //복수의 await를 사용하는 경우
+    async function getBanana() {
+      await delay(3000);
+      return '🍌';
+    }
+
+    async function pickFruits() {
+      const applePromise = getApple();
+      const bananaPromise = getBanana();
+      const apple = await applePromise; //await을 사용하면 promise가 끝날 때까지 기다림. 이 부분이 먼저 처리된 다음 아래 코드가 실행됨. 
+      const banana = await bananaPromise;
+      return `${apple} + ${banana}`;
+    } 
+    
+
+  </script>
+</body>
+</html>
