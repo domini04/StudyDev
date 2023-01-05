@@ -18,6 +18,8 @@ class TreeNode :
       current_node = nodes_to_visit.pop()
       print(current_node.value)
       nodes_to_visit += current_node.children
+  
+  
 
 
 # II. Binary Tree
