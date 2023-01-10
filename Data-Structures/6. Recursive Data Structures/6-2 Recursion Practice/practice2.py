@@ -19,5 +19,29 @@ def move_to_end(li, st):
   return result
 
 
+#2. Delete i-th item from linked list using recursion
+
+class ListNode:
+    def __init__(self, value, next_node=None):
+        self.value = value
+        self.next_node = next_node
+
+def delete_at_index(head, i):
+  #edge case : if the index is negative, return the current node
+  if i < 0:
+    return head
+  #base case : 
+  # option 1 : if the current node is None, return None
+  if head == None:
+    return None
+  # option 2 : if the index is 0, return the next node
+  if i == 0:
+    return head.next_node
+
+  #recursive case : call the function again with the next node and the index - 1
+  head.next_node = delete_at_index(head.next_node, i-1)
+  return head
+  
+  
 
   
