@@ -10,14 +10,17 @@ def level_search(root_node, val) :
   initial_path = [root_node]
   path_queue.append(initial_path)
   while len(path_queue) > 0 :
-    path = path_queue.popleft()
-    node = path[-1]
+    path = path_queue.popleft() #get the first path in the queue
+    node = path[-1] #get the last node in the path and check if it is the target
     if node.value == val :
       return node
-    for child in node.children :
-      new_path = list(path)
+    #if not, add the children of the node(path) to the queue
+    for child in node.children : 
+      new_path = list(path) 
       new_path.append(child)
       path_queue.append(new_path)
+    #ex) if the path is [A, B, C] and C has two children, D and E, then the queue will have [A, B, C, D] and [A, B, C, E]
+  return None
 
 
 
