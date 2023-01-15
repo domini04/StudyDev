@@ -1,4 +1,5 @@
 from Breadth_First import level_search
+from Depth_First import depth_search
 from collections import deque
 
 class TreeNode :
@@ -31,30 +32,36 @@ class TreeNode :
   def remove_child(self, child_node) :
     self.children = [child for child in self.children if child is not child_node]
   
-  def level_search(self, val) :
+  def breadthFirst_search(self, val) :
     return level_search(self, val)
 
-sample_root_node = TreeNode("Home")
-docs = TreeNode("Documents")
-photos = TreeNode("Photos")
-sample_root_node.children = [docs, photos]
-my_wish = TreeNode("WishList.txt")
-my_todo = TreeNode("TodoList.txt")
-my_cat = TreeNode("Fluffy.jpg")
-my_dog = TreeNode("Spot.jpg")
-docs.children = [my_wish, my_todo]
-photos.children = [my_cat, my_dog]
+  def depthFirst_search(self, val) :
+    return depth_search(self, val)
 
-print(sample_root_node)
+# sample_root_node = TreeNode("Home")
+# docs = TreeNode("Documents")
+# photos = TreeNode("Photos")
+# sample_root_node.children = [docs, photos]
+# my_wish = TreeNode("WishList.txt")
+# my_todo = TreeNode("TodoList.txt")
+# my_cat = TreeNode("Fluffy.jpg")
+# my_dog = TreeNode("Spot.jpg")
+# docs.children = [my_wish, my_todo]
+# photos.children = [my_cat, my_dog]
+
+# print(sample_root_node)
 
 
-# Seed = TreeNode("Shin")
-# A = TreeNode("A")
-# B = TreeNode("B")
-# Seed.add_child(A)
-# Seed.add_child(B)
-# A.add_child(TreeNode("C"))
-# A.add_child(TreeNode("D"))
-# B.add_child(TreeNode("E"))
-# B.add_child(TreeNode("F"))
-# print(Seed.level_search("F").value)
+Seed = TreeNode("Shin")
+A = TreeNode("A")
+B = TreeNode("B")
+Seed.add_child(A)
+Seed.add_child(B) 
+A.add_child(TreeNode("C"))
+A.add_child(TreeNode("D"))
+B.add_child(TreeNode("E"))
+B.add_child(TreeNode("F"))
+print(Seed.breadthFirst_search("F"))
+
+
+print(Seed.depthFirst_search("E"))

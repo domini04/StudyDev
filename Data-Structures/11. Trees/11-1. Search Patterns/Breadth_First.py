@@ -1,5 +1,4 @@
 #define a tree search algorithm using breadth first search
-  #Override the traverse method of the TreeNode class
 
 from collections import deque
 
