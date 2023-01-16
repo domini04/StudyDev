@@ -2,19 +2,22 @@
   #Use Recursive method
 from collections import deque
 
+
 #1. Search starts with two values : root node and target value
-def depth_search(root_node, val) :
+def depth_search(root_node, val, path = []) :
 #2. Create a stack to store the nodes to visit
   stack = deque()
-#3. Add the root node to the stack
-  stack.append(root_node)
-  while len(stack) > 0 :
-    node = stack.pop()
-    if node.value == val :
-      return node
-    else :
-      for child in node.children :
-        stack.append(child)
+  path = path + [root_node] #
+
+  #base case
+  if root_node.value == val :
+    return path
+
+  #recursive case
+  for child in root_node.children :
+    new_path = depth_search(child, val, path)
+    if new_path : #if the new path is not None, meaning that the target value is found
+      return new_path
   return None
     
 

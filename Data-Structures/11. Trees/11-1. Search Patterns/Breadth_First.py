@@ -3,7 +3,7 @@
 from collections import deque
 
 #1. Search starts with two values : root node and target value
-def level_search(root_node, val) :
+def level_search(root_node, val, path = []) :
 #2. Create a queue to store the nodes to visit
   path_queue = deque() #self is the root node
   initial_path = [root_node]
@@ -15,9 +15,9 @@ def level_search(root_node, val) :
       return node
     #if not, add the children of the node(path) to the queue
     for child in node.children : 
-      new_path = list(path) 
+      new_path = list(path)
       new_path.append(child)
-      path_queue.append(new_path)
+      path_queue.append(new_path) #append the new path to the queue (
     #ex) if the path is [A, B, C] and C has two children, D and E, then the queue will have [A, B, C, D] and [A, B, C, E]
   return None
 

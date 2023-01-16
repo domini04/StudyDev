@@ -36,32 +36,37 @@ class TreeNode :
     return level_search(self, val)
 
   def depthFirst_search(self, val) :
-    return depth_search(self, val)
+    path = depth_search(self, val)
+    #print each value in the path
+    for node in path :
+      print(node.value)
+      print("->")
 
-# sample_root_node = TreeNode("Home")
-# docs = TreeNode("Documents")
-# photos = TreeNode("Photos")
-# sample_root_node.children = [docs, photos]
-# my_wish = TreeNode("WishList.txt")
-# my_todo = TreeNode("TodoList.txt")
-# my_cat = TreeNode("Fluffy.jpg")
-# my_dog = TreeNode("Spot.jpg")
-# docs.children = [my_wish, my_todo]
-# photos.children = [my_cat, my_dog]
+sample_root_node = TreeNode("Home")
+docs = TreeNode("Documents")
+photos = TreeNode("Photos")
+sample_root_node.children = [docs, photos]
+my_wish = TreeNode("WishList.txt")
+my_todo = TreeNode("TodoList.txt")
+my_cat = TreeNode("Fluffy.jpg")
+my_dog = TreeNode("Spot.jpg")
+docs.children = [my_wish, my_todo]
+photos.children = [my_cat, my_dog]
 
-# print(sample_root_node)
+print(sample_root_node)
+print(sample_root_node.breadthFirst_search("Photos"))
+print(sample_root_node.depthFirst_search("Fluffy.jpg"))
+
+# Seed = TreeNode("Shin")
+# A = TreeNode("A")
+# B = TreeNode("B")
+# Seed.add_child(A)
+# Seed.add_child(B) 
+# A.add_child(TreeNode("C"))
+# A.add_child(TreeNode("D"))
+# B.add_child(TreeNode("E"))
+# B.add_child(TreeNode("F"))
+# print(Seed.breadthFirst_search("F"))
 
 
-Seed = TreeNode("Shin")
-A = TreeNode("A")
-B = TreeNode("B")
-Seed.add_child(A)
-Seed.add_child(B) 
-A.add_child(TreeNode("C"))
-A.add_child(TreeNode("D"))
-B.add_child(TreeNode("E"))
-B.add_child(TreeNode("F"))
-print(Seed.breadthFirst_search("F"))
-
-
-print(Seed.depthFirst_search("E"))
+# print(Seed.depthFirst_search("E"))
