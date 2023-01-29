@@ -44,7 +44,7 @@ class BinarySearchTree :
     if self.left is not None :
       self.left.depth_first_traversal()
     #2. if left subtree does not exist, print root node
-    print(self.value)
+    print(self.value, self.depth)
     #3. After printing root node, traverse right subtree
     if self.right is not None :
       self.right.depth_first_traversal()
