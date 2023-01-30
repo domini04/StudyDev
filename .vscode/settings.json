@@ -1,0 +1,5 @@
+{
+  "python.analysis.extraPaths": [
+    "./Data-Structures/13. Heaps/13-1. Max Heaps"
+  ]
+}

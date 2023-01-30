@@ -4,7 +4,7 @@ class MaxHeap :
   # 2. The 1st index is the root node -> has the largest value
   def __init__(self) : 
     self.heap_list = [None] # the None is for the 0th index
-    self.count = 0
+    self.count = 0  
 
   def parent(self, index) :
     return index // 2
@@ -14,6 +14,20 @@ class MaxHeap :
 
   def right_child(self, index) :  
     return index * 2 + 1
+
+  def get_larger_child(self, index) : #returns the index of the larger child
+    if self.right_child(index) > self.count : #if there is no right child, return the left child if it exists
+      if self.left_child(index) > self.count :
+        return None
+      return self.left_child(index)
+
+    else :
+      left_child = self.heap_list[self.left_child(index)]
+      right_child = self.heap_list[self.right_child(index)]
+      if left_child > right_child :
+        return self.left_child(index)
+      else :
+        return self.right_child(index)
 
   def insert(self, value) :
     #1. Add the new value to the end of the list
@@ -39,3 +53,13 @@ class MaxHeap :
     while index > 1 and self.heap_list[index] > self.heap_list[self.parent(index)] :
       self.heap_list[index], self.heap_list[self.parent(index)] = self.heap_list[self.parent(index)], self.heap_list[index]
       index = self.parent(index)
+
+  def delete(self) :
+    #1. Swap the first and last value
+    self.heap_list[1], self.heap_list[self.count] = self.heap_list[self.count], self.heap_list[1]
+    #2. Remove the last value
+    max_value = self.heap_list.pop()
+    self.count -= 1
+    #3. Heapify down
+    self.heapify_down()
+    return max_value
