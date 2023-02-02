@@ -1,19 +1,5 @@
-from max_heap import MaxHeap
 
-class MaxHeap :
-  def extract(self) : #extracts the max value from the heap, and returns it. Then it adjusts the heap to maintain the heap property
-    if self.count == 0 :
-      return None
-    #1. Get the max value
-    max_value = self.heap_list[1]
-    #2. Swap the max value with the last value
-    self.heap_list[1], self.heap_list[self.count] = self.heap_list[self.count], self.heap_list[1]
-    #3. Remove the last value
-    self.heap_list.pop()
-    self.count -= 1
-    #4. Heapify the list
-    self.heapify_down()
-    return max_value
+from max_heap import MaxHeap
 
 def heapsort(array) :
   sorted_array = []
@@ -26,3 +12,7 @@ def heapsort(array) :
     sorted_array.append(heap.extract())
   return sorted_array
   
+
+my_list = [99, 22, 61, 10, 21, 13, 23]
+sorted_list = heapsort(my_list)
+print(sorted_list)

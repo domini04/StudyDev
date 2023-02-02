@@ -1,3 +1,7 @@
+import sys
+print(sys.path)
+# sys.path.append('..')
+
 class MaxHeap :
   #Rule
   # 1. The parent node is always greater than the child node
@@ -40,19 +44,32 @@ class MaxHeap :
     #1. Check if the new value is greater than its parent
       #to do so, get the index of the new value
     index = self.count
-    # while index > 1 : 
-    #   parent_index = index // 2
-    #   if self.heap_list[index] > self.heap_list[parent_index] :
-    #     #2. If it is, swap the values
-    #     self.heap_list[index], self.heap_list[parent_index] = self.heap_list[parent_index], self.heap_list[index]
-    #     #3. Repeat the process with the new parent
-    #     index = parent_index
-    #   else :
-    #     break    #위 버전은 무조건 root node까지 가야함. 아래 버전은 더 빠름
-
-    while index > 1 and self.heap_list[index] > self.heap_list[self.parent(index)] :
-      self.heap_list[index], self.heap_list[self.parent(index)] = self.heap_list[self.parent(index)], self.heap_list[index]
-      index = self.parent(index)
+    while index > 1 : 
+      parent_index = index // 2
+      if self.heap_list[index] > self.heap_list[parent_index] :
+        #2. If it is, swap the values
+        self.heap_list[index], self.heap_list[parent_index] = self.heap_list[parent_index], self.heap_list[index]
+        #3. Repeat the process with the new parent
+        index = parent_index
+      else :
+        break 
+      
+  def heapify_down(self) : #adjusts the heap to maintain the heap property, by sorting the new value down the tree
+    #1. Check if the new value is less than its children
+    index = 1
+    while index <= self.count :
+      #2. If it is, swap the values
+      #2-1. Get the index of the larger child
+      larger_child_index = self.get_larger_child(index)
+      #2-2. Swap the values
+      if larger_child_index is None :
+        break
+      elif self.heap_list[index] < self.heap_list[larger_child_index] : #if the parent is less than the child, swap
+        self.heap_list[index], self.heap_list[larger_child_index] = self.heap_list[larger_child_index], self.heap_list[index]
+      #3. Repeat the process with the new child
+        index = larger_child_index
+      else :
+        break
 
   def delete(self) :
     #1. Swap the first and last value
@@ -61,5 +78,19 @@ class MaxHeap :
     max_value = self.heap_list.pop()
     self.count -= 1
     #3. Heapify down
+    self.heapify_down()
+    return max_value
+
+  def extract(self) : #extracts the max value from the heap, and returns it. Then it adjusts the heap to maintain the heap property
+    if self.count == 0 :
+      return None
+    #1. Get the max value
+    max_value = self.heap_list[1]
+    #2. Swap the max value with the last value
+    self.heap_list[1], self.heap_list[self.count] = self.heap_list[self.count], self.heap_list[1]
+    #3. Remove the last value
+    self.heap_list.pop()
+    self.count -= 1
+    #4. Heapify the list
     self.heapify_down()
     return max_value
