@@ -23,3 +23,9 @@
   # Should be self-contained and reusable in different Django projects(in theory).
   # A Django project can contain multiple apps.
   # For Django to recognize an application, it needs to be included in the INSTALLED_APPS setting.
+
+
+#Templates 
+  # A template is a text file that gets processed by Django’s template engine.
+  # Pages that are rendered by Django templates are called views.
+  # Django templates are written in a subset of Python called Django template language(DTL).
