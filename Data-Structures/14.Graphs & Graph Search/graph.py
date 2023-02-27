@@ -18,9 +18,13 @@ class Graph :
     #use DFS to find all the paths
     stack = [(start_vertex.value, [start_vertex.value])] #create a stack to store the nodes to visit. 
     path=[] #create a list to store the path
+    seen = set() #create a set to store the nodes that have been visited
 
     while stack :
       (vertex, path) = stack.pop()
+      if vertex not in seen : #if the vertex has not been visited, add the vertex to the set of visited vertices
+        seen.add(vertex) 
+
       for next in set(self.graph_dict[vertex].edges) - set(path) :
         #set(self.graph_dict[vertex].edges) : get all the edges of the current vertex
         #set(path) : get all the vertices in the current path
@@ -30,6 +34,11 @@ class Graph :
           yield path + [next]
         else :  #if not, then add the next vertex to the stack
           stack.append((next, path + [next]))
+    #if there is no path, return an empty list
+    if not path[-1] == end_vertex.value :
+      print('No path found')
+      return []
+    
 
   def find_shortest_path(self, start_vertex: Vertex, end_vertex: Vertex) :
     #find the shortest path from start_vertex to end_vertex in graph
@@ -44,7 +53,7 @@ class Graph :
       #ex) ['callan', 'peel', 'harwick']
       #find the weight of each edge in the path
       for i in range(len(path) - 1) :
-        weight_sum += self.graph_dict[path[i]].edges[path[i+1]]\
+        weight_sum += self.graph_dict[path[i]].edges[path[i+1]]
       #add the weight of the path to the list
       lengths.append(weight_sum)
     #return the path with the least weight

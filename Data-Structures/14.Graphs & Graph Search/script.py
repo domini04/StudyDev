@@ -5,16 +5,19 @@ railway = Graph()
 
 callan = Vertex('callan')
 peel = Vertex('peel')
+ulfstead = Vertex('ulfstead')
 harwick = Vertex('harwick')
 
 railway.add_vertex(callan)
 railway.add_vertex(peel)
 railway.add_vertex(harwick)
+railway.add_vertex(ulfstead)
 
+railway.add_edge(peel, harwick)
+railway.add_edge(harwick, callan)
+railway.add_edge(callan, peel)
 
-railway.add_edge(callan, peel, 1)
-railway.add_edge(harwick, callan, 7)
-railway.add_edge(peel, harwick, 8)
+print()
 
 # print(callan.edges)
 # print(harwick.edges)
@@ -23,5 +26,13 @@ railway.add_edge(peel, harwick, 8)
 for path in railway.find_all_paths(callan, harwick) :
   print(path)
 
+print()
+
+#case where there is no path
+for path in railway.find_all_paths(callan, ulfstead) :
+  print(path)
+
+
+print()
 
 print(railway.find_shortest_path(callan, harwick))
