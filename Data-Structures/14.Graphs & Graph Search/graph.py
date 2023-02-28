@@ -19,6 +19,7 @@ class Graph :
     stack = [(start_vertex.value, [start_vertex.value])] #create a stack to store the nodes to visit. 
     path=[] #create a list to store the path
     seen = set() #create a set to store the nodes that have been visited
+      
 
     while stack :
       (vertex, path) = stack.pop()
@@ -26,10 +27,10 @@ class Graph :
         seen.add(vertex) 
 
       for next in set(self.graph_dict[vertex].edges) - set(path) :
-        #set(self.graph_dict[vertex].edges) : get all the edges of the current vertex
-        #set(path) : get all the vertices in the current path
-        #set(self.graph_dict[vertex].edges) - set(path) : get all the edges of the current vertex that are not in the current path
-        #ex) if the current vertex has edges to A, B, C, D and the current path is A -> B -> C, then the next vertex to visit is D
+          #set(self.graph_dict[vertex].edges) : get all the connected vertices of the current vertex
+          #set(path) : get all the vertices in the current path
+          #set(self.graph_dict[vertex].edges) - set(path) : get all the vertices that are connected to the current vertex but not in the current path
+            #ex) if the current vertex has edges to A, B, C, D and the current path is A -> B -> C, then the next vertex to visit is D
         if next == end_vertex.value : #if the next vertex is the end vertex, then we have found a path
           yield path + [next]
         else :  #if not, then add the next vertex to the stack
