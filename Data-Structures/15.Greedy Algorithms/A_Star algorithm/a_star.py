@@ -1,7 +1,7 @@
 from math import inf
 from heapq import heappop, heappush
 from manhattan_graph import manhattan_graph, thirty_sixth_and_sixth, grand_central_station
-from heuristic import heuristic
+from heuristic import m_heuristic
 
 
 # A* algorithm
@@ -17,7 +17,7 @@ def a_star(graph, start, target):
         current_distance, current_vertex = heappop(vertices_to_visit)
         for neighbor, weight in graph[current_vertex]:
             #total distance = current distance + weight of the edge + heuristic distance
-            new_distance = current_distance + weight + heuristic(neighbor, target) #update the total distance to the neighbor
+            new_distance = current_distance + weight + m_heuristic(neighbor, target) #update the total distance to the neighbor
             new_path =  paths_and_distances[current_vertex][1] + [neighbor.name] #update the path to the neighbor
             if new_distance < paths_and_distances[neighbor][0]: #if the new distance is less than the current distance, update the distance and the path
                 paths_and_distances[neighbor][0] = new_distance
