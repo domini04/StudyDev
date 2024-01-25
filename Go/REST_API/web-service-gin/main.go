@@ -7,6 +7,7 @@ import (
 
 	"strconv"
 )
+
 type university struct {
 	ID      int    `json:"id"`
 	Name    string `json:"name"`
@@ -45,5 +46,5 @@ func main() {
 	router := gin.Default()
 	router.GET("/universities", getUniversities)
 	router.GET("/universities/:id", getUniversityByID) //:id is a placeholder for the university ID
-	router.Run("localhost:8080")
+	router.Run("localhost:8080")                       //run the server on port 8080
 }
